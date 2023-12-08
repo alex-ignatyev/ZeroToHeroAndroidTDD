@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.hideButton)
 
         if (savedInstanceState != null){
-            textView.isInvisible = savedInstanceState.
+            textView.isInvisible = savedInstanceState.getBoolean("key")
         }
 
         button.setOnClickListener {
@@ -30,6 +30,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        //outState.putString("")
+        outState.putBoolean("key", textView.isInvisible)
     }
 }
