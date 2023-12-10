@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd
 
+import android.util.Log
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -47,8 +48,17 @@ class CountTest {
     fun test_negative_minus_2() {
         try {
             Count.Base(step = -2)
-        } catch (e: Exception) {
+        } catch (e: IllegalStateException) {
             assertEquals("step should be positive, but was -2", e.message)
+        }
+    }
+
+    @Test
+    fun test_negative_minus_10(){
+        try {
+            Count.Base(step = -10)
+        } catch (e: IllegalStateException) {
+            assertEquals("step should be positive, but was -10", e.message)
         }
     }
 }
