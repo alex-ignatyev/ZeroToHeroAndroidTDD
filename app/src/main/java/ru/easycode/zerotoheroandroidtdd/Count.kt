@@ -9,9 +9,9 @@ interface Count {
     fun decrement(number: String): UiState
 
     data class Base(
-        private val step: Int,
-        private val max: Int,
-        private val min: Int
+        val step: Int,
+        val max: Int,
+        val min: Int
     ) : Count {
 
         init {
