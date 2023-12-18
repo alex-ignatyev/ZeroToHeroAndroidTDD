@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     private val countBase = Count.Base(2, 4, 0)
-    private var uiStateMin: UiState = UiState.Min("0")
-    private var uiStateMax: UiState = UiState.Max("0")
-    private var uiState: UiState? = null
+    private var uiState: UiState = UiState.Min("0")
     private lateinit var textView: TextView
     private lateinit var incrementButton: Button
     private lateinit var decrementButton: Button
@@ -25,16 +23,28 @@ class MainActivity : AppCompatActivity() {
 
         uiState = countBase.initial(textView.text.toString())
 
-        //decrementButton.isEnabled = uiStateMin !is UiState.Min
-        //incrementButton.isEnabled = uiStateMax is UiState.Max
+        checkState()
 
         incrementButton.setOnClickListener {
-            uiStateMax = countBase.increment(textView.text.toString())
-
+            uiState = countBase.increment(textView.text.toString())
+            textView.text = uiState.text
+            checkState()
         }
 
         decrementButton.setOnClickListener {
-            uiStateMin = countBase.decrement(textView.text.toString())
+            uiState = countBase.decrement(textView.text.toString())
+            textView.text = uiState.text
+            checkState()
         }
+    }
+
+    private fun checkState() {
+        decrementButton.isEnabled = uiState !is UiState.Min
+        incrementButton.isEnabled = uiState !is UiState.Max
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable()
     }
 }

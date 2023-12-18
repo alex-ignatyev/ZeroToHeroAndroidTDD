@@ -8,10 +8,10 @@ interface Count {
 
     fun decrement(number: String): UiState
 
-    data class Base(
-        val step: Int,
-        val max: Int,
-        val min: Int
+    class Base(
+        private val step: Int,
+        private val max: Int,
+        private val min: Int
     ) : Count {
 
         init {

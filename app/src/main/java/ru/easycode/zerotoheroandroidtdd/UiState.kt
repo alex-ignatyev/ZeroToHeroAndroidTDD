@@ -3,20 +3,21 @@ package ru.easycode.zerotoheroandroidtdd
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-interface UiState: Parcelable {
+interface UiState : Parcelable {
+    val text: String
 
     @Parcelize
     data class Min(
-        val text: String
-    ): Parcelable, UiState
+        override val text: String
+    ) : UiState, Parcelable
 
     @Parcelize
     data class Base(
-        val text: String
-    ): Parcelable, UiState
+        override val text: String
+    ) : UiState, Parcelable
 
     @Parcelize
     data class Max(
-        val text: String
-    ): Parcelable, UiState
+        override val text: String
+    ) : UiState, Parcelable
 }
