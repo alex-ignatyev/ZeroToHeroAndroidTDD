@@ -21,6 +21,17 @@ class MainActivity : AppCompatActivity() {
         incrementButton = findViewById(R.id.incrementButton)
         decrementButton = findViewById(R.id.decrementButton)
 
+        if (savedInstanceState != null) {
+            val save = savedInstanceState.getParcelable<UiState>(KEY_UiSTATE) ?: return
+            uiState = save
+            textView.text = save.text
+            val decrementButtonBlocked = save !is UiState.Min
+            decrementButton.isEnabled = decrementButtonBlocked
+            val incrementButtonBlocked = save !is UiState.Max
+            incrementButton.isEnabled = incrementButtonBlocked
+
+        }
+
         uiState = countBase.initial(textView.text.toString())
 
         checkState()
@@ -39,12 +50,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkState() {
-        decrementButton.isEnabled = uiState !is UiState.Min
-        incrementButton.isEnabled = uiState !is UiState.Max
+        val decrementButtonBlocked = uiState !is UiState.Min
+        decrementButton.isEnabled = decrementButtonBlocked
+        val incrementButtonBlocked = uiState !is UiState.Max
+        incrementButton.isEnabled = incrementButtonBlocked
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable()
+        outState.putParcelable(KEY_UiSTATE, uiState)
+    }
+
+    private companion object {
+        const val KEY_UiSTATE = "key_uiState"
     }
 }
