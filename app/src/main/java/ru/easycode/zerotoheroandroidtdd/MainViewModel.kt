@@ -1,7 +1,9 @@
 package ru.easycode.zerotoheroandroidtdd
 
-class MainViewModel {
+class MainViewModel(
 
-    val liveDataWrapper = LiveDataWrapper(),
-    val repository = Repository()
+    private val liveDataWrapper: LiveDataWrapper,
+    private val repository: Repository
+) {
+
 }

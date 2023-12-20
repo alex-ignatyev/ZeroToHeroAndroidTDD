@@ -10,11 +10,11 @@ interface LiveDataWrapper {
     class Base() : LiveDataWrapper {
 
         override fun update(value: UiState) {
-            TODO("Not yet implemented")
+
         }
 
         override fun liveData(): LiveData<UiState> {
-            TODO("Not yet implemented")
+
         }
     }
 }

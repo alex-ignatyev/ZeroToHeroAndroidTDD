@@ -1,8 +1,13 @@
 package ru.easycode.zerotoheroandroidtdd
 
-class Repository {
+interface Repository {
 
-    class Base(
+    suspend fun load()
 
-    ) : Repository {}
+    class Base() : Repository {
+
+        override suspend fun load(){
+
+        }
+    }
 }
