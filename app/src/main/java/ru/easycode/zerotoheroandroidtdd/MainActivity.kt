@@ -1,30 +1,36 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import ru.easycode.zerotoheroandroidtdd.BundleWrapper.Mutable
+import android.os.PersistableBundle
+import androidx.appcompat.app.AppCompatActivity
+import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var progressBar: ProgressBar
-    private lateinit var textView: TextView
-    private lateinit var button: Button
+    private lateinit var vm: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val vm = (application as App).vm
-        val bundle = (application as App).bundle
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        vm = (application as App).vm
 
-        progressBar = findViewById(R.id.progressBar)
-        textView = findViewById(R.id.titleTextView)
-        button = findViewById(R.id.actionButton)
-
-        button.setOnClickListener {
+        binding.actionButton.setOnClickListener {
+            vm.load()
         }
 
+        vm.liveDataWrapper.liveData().observe(this) { uiState ->
+            uiState.implementationView(binding.progressBar, binding.titleTextView, binding.actionButton)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        vm.save(BundleWrapper.Mutable.Base(outState))
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        vm.restore(BundleWrapper.Mutable.Base(savedInstanceState))
     }
 }
